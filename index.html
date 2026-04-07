@@ -363,8 +363,24 @@
             <!-- Videos Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 
-                <!-- Video 1: Il vero video del banco -->
-                <div class="video-card scroll-reveal cursor-pointer group" data-video="./Immagini/Legacy/Il vero video del banco final cut.mp4">
+                <!-- Video 1: Finale per mattia -->
+                <div class="video-card scroll-reveal cursor-pointer group" data-video="0">
+                    <div class="relative overflow-hidden aspect-video bg-slate rounded-lg">
+                        <div class="w-full h-full bg-black flex items-center justify-center">
+                            <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-dark-bg ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-40 transition-all duration-300"></div>
+                    </div>
+                    <h3 class="font-sans text-lg font-bold text-white mt-4">Finale per mattia</h3>
+                    <p class="text-slate text-sm mt-2">Clicca per riprodurre</p>
+                </div>
+                
+                <!-- Video 2: Il vero video del banco -->
+                <div class="video-card scroll-reveal cursor-pointer group" data-video="1">
                     <div class="relative overflow-hidden aspect-video bg-slate rounded-lg">
                         <div class="w-full h-full bg-black flex items-center justify-center">
                             <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center">
@@ -379,8 +395,8 @@
                     <p class="text-slate text-sm mt-2">Clicca per riprodurre</p>
                 </div>
                 
-                <!-- Video 2: Pretendiamo legalità -->
-                <div class="video-card scroll-reveal cursor-pointer group" data-video="./Immagini/Legacy/Pretendiamo_legalita_logo.mp4">
+                <!-- Video 3: Pretendiamo legalità -->
+                <div class="video-card scroll-reveal cursor-pointer group" data-video="2">
                     <div class="relative overflow-hidden aspect-video bg-slate rounded-lg">
                         <div class="w-full h-full bg-black flex items-center justify-center">
                             <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center">
@@ -403,9 +419,7 @@
     <div id="videoModal" class="slider-modal">
         <div class="slider-container">
             <div class="slider-image-wrapper flex items-center justify-center">
-                <video id="videoPlayer" class="slider-image max-w-full max-h-full" controls>
-                    Your browser does not support the video tag.
-                </video>
+                <iframe id="videoPlayer" class="slider-image max-w-full max-h-full" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             <button class="slider-close-btn" id="closeVideoBtn">&times;</button>
         </div>
@@ -512,34 +526,27 @@
         
         // Funzione per aprire il video player
         function playVideo(videoSrc, mimeType) {
-            // Rimuovi eventuali source precedenti
-            while (videoPlayer.firstChild) {
-                videoPlayer.removeChild(videoPlayer.firstChild);
-            }
-            
-            if (mimeType) {
+            // Se è un URL di Google Drive, usa iframe
+            if (videoSrc.includes('drive.google.com')) {
+                videoPlayer.src = videoSrc;
+            } else {
+                // Fallback per video locali (se rimangono)
                 const source = document.createElement('source');
                 source.src = videoSrc;
-                source.type = mimeType;
+                source.type = mimeType || 'video/mp4';
                 videoPlayer.appendChild(source);
-            } else {
-                videoPlayer.src = videoSrc;
             }
             
             videoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Re-carica il video per riconoscere le nuove source
-            videoPlayer.load();
-            videoPlayer.play();
         }
         
         // Funzione per chiudere il video player
         function closeVideo() {
-            videoPlayer.pause();
+            videoPlayer.src = '';
             while (videoPlayer.firstChild) {
                 videoPlayer.removeChild(videoPlayer.firstChild);
             }
-            videoPlayer.src = '';
             videoModal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
@@ -563,9 +570,10 @@
         // Click sui video card
         videoCards.forEach(card => {
             card.addEventListener('click', () => {
-                const videoSrc = card.getAttribute('data-video');
-                if (videoSrc) {
-                    playVideo(videoSrc, 'video/mp4');
+                const videoIndex = parseInt(card.getAttribute('data-video'));
+                if (galleryConfig && galleryConfig.Video && galleryConfig.Video[videoIndex]) {
+                    const videoUrl = galleryConfig.Video[videoIndex].url;
+                    playVideo(videoUrl, 'video/mp4');
                 }
             });
         });
