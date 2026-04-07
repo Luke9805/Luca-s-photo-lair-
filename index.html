@@ -567,17 +567,6 @@
             }
         });
         
-        // Click sui video card
-        videoCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const videoIndex = parseInt(card.getAttribute('data-video'));
-                if (galleryConfig && galleryConfig.Video && galleryConfig.Video[videoIndex]) {
-                    const videoUrl = galleryConfig.Video[videoIndex].url;
-                    playVideo(videoUrl, 'video/mp4');
-                }
-            });
-        });
-        
         // ===== SLIDER GALLERY =====
         const sliderModal = document.getElementById('sliderModal');
         const sliderImage = document.getElementById('sliderImage');
@@ -604,6 +593,22 @@
                 const response = await fetch('gallery-config.json');
                 galleryConfig = await response.json();
                 console.log('✅ Configurazione galleria caricata');
+                console.log('Video config:', galleryConfig.Video);
+                
+                // Registra gli event listener dei video DOPO che il config è caricato
+                videoCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const videoIndex = parseInt(card.getAttribute('data-video'));
+                        console.log('Video cliccato, index:', videoIndex);
+                        if (galleryConfig && galleryConfig.Video && galleryConfig.Video[videoIndex]) {
+                            const videoUrl = galleryConfig.Video[videoIndex].url;
+                            console.log('Video URL:', videoUrl);
+                            playVideo(videoUrl, 'video/mp4');
+                        } else {
+                            console.error('Video non trovato a indice:', videoIndex);
+                        }
+                    });
+                });
             } catch (error) {
                 console.error('Errore nel caricamento della configurazione della galleria:', error);
                 galleryConfig = {};
