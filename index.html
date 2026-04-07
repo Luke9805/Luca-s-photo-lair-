@@ -585,11 +585,17 @@
         let categoryImages = [];
         let galleryConfig = null;
         
+        // Crea URL di Google Drive dal file ID
+        function getDriveImageUrl(fileId) {
+            return `https://drive.google.com/uc?export=view&id=${fileId}`;
+        }
+        
         // Carica la configurazione della galleria
         async function loadGalleryConfig() {
             try {
                 const response = await fetch('gallery-config.json');
                 galleryConfig = await response.json();
+                console.log('✅ Configurazione galleria caricata');
             } catch (error) {
                 console.error('Errore nel caricamento della configurazione della galleria:', error);
                 galleryConfig = {};
@@ -625,8 +631,21 @@
         function updateSlider() {
             if (categoryImages.length === 0) return;
             
-            const imagePath = categoryImages[currentImageIndex];
-            sliderImage.src = imagePath;
+            const imageData = categoryImages[currentImageIndex];
+            let imageSrc;
+            
+            if (imageData.fileId) {
+                // Carica da Google Drive
+                imageSrc = getDriveImageUrl(imageData.fileId);
+            } else if (typeof imageData === 'string') {
+                // Percorso locale (retrocompatibilità)
+                imageSrc = imageData;
+            } else {
+                console.warn('Formato immagine non riconosciuto:', imageData);
+                imageSrc = '';
+            }
+            
+            sliderImage.src = imageSrc;
             sliderImage.alt = `${currentCategory} - Immagine ${currentImageIndex + 1}`;
             sliderCounter.textContent = `${currentImageIndex + 1} / ${categoryImages.length}`;
         }

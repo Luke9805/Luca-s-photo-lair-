@@ -1,0 +1,33 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Credenziali Google Drive (sensibili!)
+credentials.json
+client_secret_*.json
+
+# Token di autenticazione
+token.json
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cartelle pesanti (foto locali - usiamo Google Drive invece)
+Immagini/
+
+# File temporanei
+*.tmp
+.env
