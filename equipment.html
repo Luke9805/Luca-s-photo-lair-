@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCA SALVIGNI - Attrezzatura Fotografica</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': '#1A1A1A',
+                        'gold': '#C4A77C',
+                        'slate': '#4F4F4F',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        body {
+            background-color: #1A1A1A;
+            color: #FFFFFF;
+        }
+
+        /* Hamburger Menu Animation */
+        .hamburger-menu {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .hamburger-menu.active {
+            transform: rotateZ(180deg);
+        }
+        
+        .hamburger-line {
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(1) {
+            transform: translateY(12px) rotateZ(45deg) scaleX(1.1);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(3) {
+            transform: translateY(-12px) rotateZ(-45deg) scaleX(1.1);
+        }
+
+        /* Scroll Reveal Animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            will-change: opacity, transform;
+        }
+        
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-white overflow-x-hidden">
+    
+    <!-- NAVBAR STICKY -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark-bg bg-opacity-95 backdrop-blur-md z-50 border-b border-gold border-opacity-20">
+        <div class="max-w-7xl mx-auto px-4 md:px-16 py-4 flex items-center justify-between">
+            <!-- Logo/Brand -->
+            <a href="index.html" class="font-serif text-2xl font-bold text-gold hover:text-white transition-colors">
+                LS
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="flex flex-col items-center gap-1 text-slate hover:text-gold transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">HOME</span>
+                </a>
+                
+                <a href="equipment.html" class="flex flex-col items-center gap-1 text-gold hover:text-white transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 12H4V7h16v10zm-1-7h-4V6h4v4z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">ATTREZZATURA</span>
+                </a>
+                
+                <a href="contact.html" class="flex flex-col items-center gap-1 text-slate hover:text-gold transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 5.523 4.477 10 10 10s10-4.477 10-10zm-2 0a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">CONTATTI</span>
+                </a>
+            </div>
+            
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden">
+                <button id="mobileMenuBtn" class="hamburger-menu flex flex-col gap-1.5 cursor-pointer group">
+                    <span class="hamburger-line w-6 h-0.5 bg-gold group-hover:bg-white transition-colors"></span>
+                    <span class="hamburger-line w-6 h-0.5 bg-gold group-hover:bg-white transition-colors"></span>
+                    <span class="hamburger-line w-6 h-0.5 bg-gold group-hover:bg-white transition-colors"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- MOBILE MENU DROPDOWN -->
+    <div id="mobileMenu" class="hidden fixed top-16 left-0 right-0 bg-dark-bg bg-opacity-98 border-b border-gold border-opacity-20 md:hidden z-40">
+        <div class="flex flex-col gap-4 p-6">
+            <a href="index.html" class="flex items-center gap-3 text-slate hover:text-gold transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                HOME
+            </a>
+            
+            <a href="equipment.html" class="flex items-center gap-3 text-gold hover:text-white transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 12H4V7h16v10zm-1-7h-4V6h4v4z"/>
+                </svg>
+                ATTREZZATURA
+            </a>
+            
+            <a href="contact.html" class="flex items-center gap-3 text-slate hover:text-gold transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 5.523 4.477 10 10 10s10-4.477 10-10zm-2 0a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2z"/>
+                </svg>
+                CONTATTI
+            </a>
+        </div>
+    </div>
+    
+    <!-- SEZIONE: ATTREZZATURA -->
+    <section id="equipment" class="relative w-full pt-32 pb-24 px-4 md:px-16 bg-dark-bg">
+        <!-- Background Image con overlay -->
+        <img src="https://lh3.googleusercontent.com/d/1q4CqB5m2mHODAnPhcM-T51W9oh4MLvP3" alt="Background" class="absolute inset-0 w-full h-64 object-cover -z-10 opacity-10">
+        
+        <div class="max-w-7xl mx-auto">
+            <h1 class="font-serif text-6xl md:text-7xl font-bold text-gold mb-4 text-center scroll-reveal">
+                LA MIA ATTREZZATURA
+            </h1>
+            <p class="text-slate text-center text-lg mb-20 scroll-reveal">
+                Scopri l'attrezzatura che uso per inseguire la mia passione fotografica
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Equipment Card 1: Fotocamera Principale -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-8 rounded-lg hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 12H4V7h16v10zm-1-7h-4V6h4v4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl text-gold font-bold">Fotocamera</h3>
+                    </div>
+                    <p class="text-slate leading-relaxed">
+                        Canon EOS con sensore full-frame, perfetta per catturare dettagli incredibili in ogni condizione di luce. Offre una qualità d'immagine eccellente e controlli manuali completi.
+                    </p>
+                </div>
+                
+                <!-- Equipment Card 2: Obiettivi -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-8 rounded-lg hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl text-gold font-bold">Obiettivi</h3>
+                    </div>
+                    <p class="text-slate leading-relaxed">
+                        Collezione di ottiche professionali: 18-55mm per grandangoli, 50mm f/1.8 per ritratti e 70-200mm per teleobbiettivo. Ogni obiettivo ha un ruolo specifico nella mia creatività.
+                    </p>
+                </div>
+                
+                <!-- Equipment Card 3: Illuminazione -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-8 rounded-lg hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl text-gold font-bold">Illuminazione</h3>
+                    </div>
+                    <p class="text-slate leading-relaxed">
+                        Flash esterno e kit di illuminazione portatile professionale. Mi permette di controllare la luce in studio e in esterni per creare l'atmosfera giusta per ogni scatto.
+                    </p>
+                </div>
+                
+                <!-- Equipment Card 4: Stabilizzazione -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-8 rounded-lg hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm-1 14h2v2h-2v-2zm0-12h2v10h-2V5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl text-gold font-bold">Stabilizzazione</h3>
+                    </div>
+                    <p class="text-slate leading-relaxed">
+                        Treppiede robusto in carbonio e gimbal professionale per video. Garantisce scatti nitidi e video fluidi anche in situazioni critiche come grosse distanze o bassa luminosità.
+                    </p>
+                </div>
+                
+                <!-- Equipment Card 5: Storage -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-8 rounded-lg hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl text-gold font-bold">Storage</h3>
+                    </div>
+                    <p class="text-slate leading-relaxed">
+                        Schede di memoria ad alta velocità (UHS-II) e backup esterno su hard drive dedicato. Proteggere i miei scatti è fondamentale per preservare i ricordi di ogni sessione fotografica.
+                    </p>
+                </div>
+                
+                <!-- Equipment Card 6: Editing -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-8 rounded-lg hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-2xl text-gold font-bold">Post-Produzione</h3>
+                    </div>
+                    <p class="text-slate leading-relaxed">
+                        Adobe Lightroom e Photoshop per il ritocco professionale. È dove la visione iniziale si trasforma in capolavoro finale, con correzioni di colore, esposizione e dettagli.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="w-full py-12 px-4 bg-dark-bg border-t border-slate border-opacity-20">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-slate text-sm">
+                © 2026 LUCA SALVIGNI. Tutti i diritti riservati.
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JAVASCRIPT: Mobile Menu & Scroll Reveal -->
+    <script>
+        // ===== MOBILE MENU TOGGLE =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuBtn.classList.toggle('active');
+        });
+        
+        // Chiudi il menu quando clicchi su un link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.classList.remove('active');
+            });
+        });
+        
+        // ===== SCROLL REVEAL (Intersection Observer) =====
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+    
+</body>
+</html>
