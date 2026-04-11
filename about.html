@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCA SALVIGNI - Chi Sono</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': '#1A1A1A',
+                        'gold': '#C4A77C',
+                        'slate': '#4F4F4F',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        body {
+            background-color: #1A1A1A;
+            color: #FFFFFF;
+        }
+
+        /* Scroll Reveal Animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+            will-change: opacity, transform;
+        }
+        
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hamburger Menu Animation */
+        .hamburger-menu {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .hamburger-menu.active {
+            transform: rotateZ(180deg);
+        }
+        
+        .hamburger-line {
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(1) {
+            transform: translateY(12px) rotateZ(45deg) scaleX(1.1);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(3) {
+            transform: translateY(-12px) rotateZ(-45deg) scaleX(1.1);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-white overflow-x-hidden">
+    
+    <!-- NAVBAR STICKY -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark-bg bg-opacity-95 backdrop-blur-md z-50 border-b border-gold border-opacity-20">
+        <div class="max-w-7xl mx-auto px-4 md:px-16 py-4 flex items-center justify-between">
+            <!-- Logo/Brand -->
+            <a href="index.html" class="font-serif text-2xl font-bold text-gold hover:text-white transition-colors">
+                LS
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="flex flex-col items-center gap-1 text-slate hover:text-gold transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">HOME</span>
+                </a>
+                
+                <a href="about.html" class="flex flex-col items-center gap-1 text-gold hover:text-white transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">CHI SONO</span>
+                </a>
+                
+                <a href="equipment.html" class="flex flex-col items-center gap-1 text-slate hover:text-gold transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 12H4V7h16v10zm-1-7h-4V6h4v4z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">ATTREZZATURA</span>
+                </a>
+                
+                <a href="contact.html" class="flex flex-col items-center gap-1 text-slate hover:text-gold transition-colors group">
+                    <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 5.523 4.477 10 10 10s10-4.477 10-10zm-2 0a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2z"/>
+                    </svg>
+                    <span class="text-xs font-semibold">CONTATTI</span>
+                </a>
+            </div>
+            
+            <!-- Mobile Hamburger Menu -->
+            <div class="md:hidden">
+                <button id="mobileMenuBtn" class="hamburger-menu flex flex-col gap-1.5 cursor-pointer group">
+                    <span class="hamburger-line w-6 h-0.5 bg-gold group-hover:bg-white transition-colors"></span>
+                    <span class="hamburger-line w-6 h-0.5 bg-gold group-hover:bg-white transition-colors"></span>
+                    <span class="hamburger-line w-6 h-0.5 bg-gold group-hover:bg-white transition-colors"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- MOBILE MENU DROPDOWN -->
+    <div id="mobileMenu" class="hidden fixed top-16 left-0 right-0 bg-dark-bg bg-opacity-98 border-b border-gold border-opacity-20 md:hidden z-40">
+        <div class="flex flex-col gap-4 p-6">
+            <a href="index.html" class="flex items-center gap-3 text-slate hover:text-gold transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                HOME
+            </a>
+            
+            <a href="about.html" class="flex items-center gap-3 text-gold hover:text-white transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                CHI SONO
+            </a>
+            
+            <a href="equipment.html" class="flex items-center gap-3 text-slate hover:text-gold transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 12H4V7h16v10zm-1-7h-4V6h4v4z"/>
+                </svg>
+                ATTREZZATURA
+            </a>
+            
+            <a href="contact.html" class="flex items-center gap-3 text-slate hover:text-gold transition-colors font-semibold">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 5.523 4.477 10 10 10s10-4.477 10-10zm-2 0a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2zm0 4a1 1 0 100 2 1 1 0 000-2z"/>
+                </svg>
+                CONTATTI
+            </a>
+        </div>
+    </div>
+    
+    <!-- SEZIONE: CHI SONO -->
+    <section id="about" class="relative w-full pt-40 md:pt-48 pb-20 md:pb-24 px-4 sm:px-6 md:px-16 bg-dark-bg">
+        <div class="max-w-7xl mx-auto">
+            <!-- Hero Introduction -->
+            <div class="mb-24 scroll-reveal">
+                <div class="text-center mb-12">
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gold mb-3 md:mb-4">
+                        Mi Presento
+                    </h1>
+                    <div class="w-16 sm:w-20 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left: Text Introduction -->
+                    <div>
+                        <div class="mb-6 md:mb-8">
+                            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gold mb-1 md:mb-2">Luca Salvigni</h2>
+                            <p class="text-gold font-semibold text-base md:text-lg mb-4 md:mb-6">Fotografo | Matera, Italia</p>
+                        </div>
+                        
+                        <p class="text-slate text-sm sm:text-base leading-relaxed mb-4 md:mb-6">
+                            Mi chiamo <span class="text-white font-semibold">Luca Salvigni</span> e ho circa <span class="text-white font-semibold">21 anni</span>. Sono nato e cresciuto a <span class="text-white font-semibold">Matera</span>, una città che ha profondamente influenzato la mia visione artistica.
+                        </p>
+                        
+                        <p class="text-slate text-sm sm:text-base leading-relaxed mb-4 md:mb-6">
+                            La fotografia è arrivata nella mia vita non per caso, ma come una naturale espressione della mia curiosità verso il mondo. Ogni giorno, con la mia fotocamera al collo, cerco di catturare l'autenticità dei momenti, le emozioni sincere e le storie che meritano di essere immortalate.
+                        </p>
+                        
+                        <p class="text-slate text-sm sm:text-base leading-relaxed">
+                            A questa giovane età, ho già avuto il privilegio di documentare momenti significativi nella mia comunità. La mia passione non conosce limiti e continuo a evolvermi come fotografo, imparando qualcosa di nuovo da ogni scatto.
+                        </p>
+                    </div>
+                    
+                    <!-- Right: Photo -->
+                    <div class="scroll-reveal flex justify-center">
+                        <div class="relative w-full max-w-md">
+                            <div class="absolute inset-0 bg-gradient-to-br from-gold/20 to-transparent rounded-2xl blur-3xl"></div>
+                            <div class="relative rounded-2xl overflow-hidden border-2 border-gold/40">
+                                <img src="image.png" alt="Luca Salvigni" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-20 scroll-reveal">
+                <!-- Left: Story -->
+                <div class="scroll-reveal">
+                    <h2 class="font-serif text-4xl font-bold text-gold mb-6">La Mia Passione</h2>
+                    <p class="text-slate text-base leading-relaxed mb-6">
+                        La fotografia non è solo una tecnica per me, è una <span class="text-gold font-semibold">passione</span> che mi muove ogni giorno. Non la pratico per professione, ma per l'amore di catturare momenti autentici, emozioni sincere e storie che meritano di essere raccontate.
+                    </p>
+                    <p class="text-slate text-base leading-relaxed mb-6">
+                        Attraverso l'obiettivo, scopro la bellezza in ogni istante: nel sorriso di una persona, nell'energia di un evento, nella serenità di un paesaggio. La mia missione è trasformare questi momenti in ricordi immortali.
+                    </p>
+                    <p class="text-slate text-base leading-relaxed">
+                        Ogni progetto che accetto è un'opportunità di creare qualcosa di significativo, di aggiungere il mio tocco artistico a momenti che le persone custodiscono nel cuore.
+                    </p>
+                </div>
+                
+                <!-- Right: Passion Image -->
+                <div class="scroll-reveal flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute inset-0 bg-gradient-to-br from-gold/20 to-transparent rounded-3xl blur-3xl"></div>
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-gold/40">
+                            <img src="image copy.png" alt="La mia passione fotografica" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Experiences Section -->
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gold mb-8 md:mb-12 text-center scroll-reveal">Le Mie Esperienze</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                
+                <!-- Experience 1: Matera Events -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-5 md:p-8 rounded-2xl hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-3 md:gap-4 mb-4">
+                        <div class="w-10 md:w-12 h-10 md:h-12 bg-gold rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 md:w-6 h-5 md:h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-lg md:text-2xl text-gold font-bold">Eventi a Matera</h3>
+                    </div>
+                    <p class="text-slate text-sm md:text-base leading-relaxed">
+                        Ho avuto il privilegio di fotografare numerosi eventi nella magnifica città di Matera. Dalla documentazione di cerimonie all'immortalazione di momenti di comunità, ogni scatto racconta la ricchezza culturale del territorio.
+                    </p>
+                </div>
+                
+                <!-- Experience 2: Liceo E Duni -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-5 md:p-8 rounded-2xl hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-3 md:gap-4 mb-4">
+                        <div class="w-10 md:w-12 h-10 md:h-12 bg-gold rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 md:w-6 h-5 md:h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-lg md:text-2xl text-gold font-bold">Liceo E. Duni</h3>
+                    </div>
+                    <p class="text-slate text-sm md:text-base leading-relaxed">
+                        Sono stato parte della comunità scolastica del Liceo Classico E. Duni, dove ho avuto l'opportunità di documentare momenti importanti della vita studentesca, dalle manifestazioni alle celebrazioni accademiche.
+                    </p>
+                </div>
+                
+                <!-- Experience 3: Banco della Solidarietà -->
+                <div class="scroll-reveal bg-slate bg-opacity-10 border-l-4 border-gold p-5 md:p-8 rounded-2xl hover:bg-opacity-20 transition-all duration-300">
+                    <div class="flex items-center gap-3 md:gap-4 mb-4">
+                        <div class="w-10 md:w-12 h-10 md:h-12 bg-gold rounded-lg flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 md:w-6 h-5 md:h-6 text-dark-bg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif text-lg md:text-2xl text-gold font-bold">Banco Solidarietà</h3>
+                    </div>
+                    <p class="text-slate text-sm md:text-base leading-relaxed">
+                        Ho partecipato attivamente al Banco della Solidarietà, utilizzando la mia fotografia per raccontare storie di generosità e comunità. Documentare iniziative sociali è un modo per amplificare l'impatto del bene.
+                    </p>
+                </div>
+                
+            </div>
+            
+            <!-- Vision Section -->
+            <div class="scroll-reveal mt-16 md:mt-20 bg-slate bg-opacity-10 border border-gold border-opacity-30 p-6 md:p-12 rounded-2xl">
+                <h3 class="font-serif text-2xl sm:text-3xl md:text-4xl text-gold font-bold mb-4 md:mb-6 text-center">La Mia Visione</h3>
+                <p class="text-slate text-sm sm:text-base leading-relaxed text-center max-w-3xl mx-auto">
+                    Credo nella fotografia come strumento di connessione umana. Ogni immagine che cattura la mia fotocamera è un ponte tra il momento e l'eternità. Voglio continuare a raccontare storie autentiche, a supportare iniziative che contano, e a fare della mia passione un contributo positivo alla comunità.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="w-full py-12 px-4 bg-dark-bg border-t border-slate border-opacity-20">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-slate text-sm">
+                © 2026 LUCA SALVIGNI. Tutti i diritti riservati.
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JAVASCRIPT: Mobile Menu & Scroll Reveal -->
+    <script>
+        // ===== MOBILE MENU TOGGLE =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuBtn.classList.toggle('active');
+        });
+        
+        // Chiudi il menu quando clicchi su un link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.classList.remove('active');
+            });
+        });
+        
+        // ===== SCROLL REVEAL (Intersection Observer) =====
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+    
+</body>
+</html>
