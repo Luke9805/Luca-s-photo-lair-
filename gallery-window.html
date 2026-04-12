@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galleria Fotografica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', System, sans-serif;
+            overflow: hidden;
+        }
+
+        .gallery-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .gallery-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            z-index: 100;
+        }
+
+        .gallery-title {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 90%;
+            height: 80%;
+            max-width: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            animation: fadeIn 0.4s ease-in-out;
+            user-select: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-button:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        .gallery-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .counter {
+            font-size: 14px;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        .keyboard-info {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery-header {
+                padding: 15px;
+            }
+
+            .gallery-title {
+                font-size: 18px;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .prev-btn {
+                left: 5px;
+            }
+
+            .next-btn {
+                right: 5px;
+            }
+
+            .gallery-footer {
+                padding: 15px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .keyboard-info {
+                font-size: 11px;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .error {
+            text-align: center;
+            font-size: 18px;
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1 class="gallery-title" id="galleryTitle">GALLERIA</h1>
+            <button class="close-btn" id="closeBtn">&times;</button>
+        </div>
+
+        <div class="image-wrapper">
+            <img id="galleryImage" class="gallery-image" src="" alt="Gallery image">
+            <button class="nav-button prev-btn" id="prevBtn">‹</button>
+            <button class="nav-button next-btn" id="nextBtn">›</button>
+        </div>
+
+        <div class="gallery-footer">
+            <div class="counter" id="counter">1 / 10</div>
+            <div class="keyboard-info">Usa ← → per navigare, ESC per chiudere</div>
+        </div>
+    </div>
+
+    <script>
+        let galleryConfig = null;
+        let currentCategory = '';
+        let currentImageIndex = 0;
+        let categoryImages = [];
+
+        // Funzione per ottenere il parametro dalla URL
+        function getQueryParam(param) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(param);
+        }
+
+        // Funzione per costruire l'URL dell'immagine da Google Drive
+        function getDriveImageUrl(fileId) {
+            return `https://lh3.googleusercontent.com/d/${fileId}`;
+        }
+
+        // Carica la configurazione della galleria
+        async function loadGalleryConfig() {
+            try {
+                const response = await fetch('gallery-config.json');
+                galleryConfig = await response.json();
+                console.log('✅ Configurazione galleria caricata');
+                initializeGallery();
+            } catch (error) {
+                console.error('Errore nel caricamento della configurazione:', error);
+                showError('Errore nel caricamento della galleria');
+            }
+        }
+
+        // Inizializza la galleria
+        function initializeGallery() {
+            currentCategory = getQueryParam('category') || '';
+
+            if (!currentCategory || !galleryConfig[currentCategory]) {
+                showError('Categoria non trovata');
+                return;
+            }
+
+            categoryImages = galleryConfig[currentCategory];
+
+            if (categoryImages.length === 0) {
+                showError('Nessuna immagine in questa categoria');
+                return;
+            }
+
+            document.getElementById('galleryTitle').textContent = currentCategory.toUpperCase();
+            currentImageIndex = 0;
+            updateImage();
+        }
+
+        // Aggiorna l'immagine visualizzata
+        function updateImage() {
+            if (categoryImages.length === 0) return;
+
+            const imageData = categoryImages[currentImageIndex];
+            const imageSrc = getDriveImageUrl(imageData.fileId);
+
+            const img = document.getElementById('galleryImage');
+            img.src = imageSrc;
+            img.alt = `${currentCategory} - ${currentImageIndex + 1}`;
+
+            document.getElementById('counter').textContent = `${currentImageIndex + 1} / ${categoryImages.length}`;
+        }
+
+        // Mostra messaggio di errore
+        function showError(message) {
+            document.getElementById('galleryImage').style.display = 'none';
+            document.querySelector('.image-wrapper').innerHTML = `<div class="error">${message}</div>`;
+            document.getElementById('counter').textContent = '0 / 0';
+        }
+
+        // Event listeners
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (categoryImages.length > 0) {
+                currentImageIndex = (currentImageIndex + 1) % categoryImages.length;
+                updateImage();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (categoryImages.length > 0) {
+                currentImageIndex = (currentImageIndex - 1 + categoryImages.length) % categoryImages.length;
+                updateImage();
+            }
+        });
+
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            window.close();
+        });
+
+        // Tastiera
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
+            if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
+            if (e.key === 'Escape') window.close();
+        });
+
+        // Carica la configurazione al caricamento della pagina
+        loadGalleryConfig();
+    </script>
+</body>
+</html>
