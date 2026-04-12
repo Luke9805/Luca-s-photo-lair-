@@ -711,8 +711,8 @@
             card.addEventListener('click', () => {
                 const category = card.getAttribute('data-category');
                 if (category) {
-                    // Apri la finestra della galleria
-                    window.open(`gallery-window.html?category=${encodeURIComponent(category)}`, 'gallery', 'width=1200,height=800,resizable=yes');
+                    // Apri la galleria in una nuova scheda
+                    window.open(`gallery-window.html?category=${encodeURIComponent(category)}`, '_blank');
                 }
             });
         });
