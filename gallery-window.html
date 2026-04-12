@@ -320,6 +320,36 @@
             if (e.key === 'Escape') window.close();
         });
 
+        // Touch Swipe per mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const imageWrapper = document.querySelector('.image-wrapper');
+
+        imageWrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        imageWrapper.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Minimo di pixel per registrare uno swipe
+            const difference = touchStartX - touchEndX;
+
+            if (Math.abs(difference) > swipeThreshold) {
+                if (difference > 0) {
+                    // Swipe a sinistra = prossima immagine
+                    document.getElementById('nextBtn').click();
+                } else {
+                    // Swipe a destra = immagine precedente
+                    document.getElementById('prevBtn').click();
+                }
+            }
+        }
+
         // Carica la configurazione al caricamento della pagina
         loadGalleryConfig();
     </script>
